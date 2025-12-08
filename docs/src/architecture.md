@@ -8,7 +8,8 @@ Our current encoder is based on [tagged-union](https://en.wikipedia.org/wiki/Tag
 
 ```mermaid
 flowchart TD
-    A["Start encode_bencode(value)"] --> B{"BencodeValue type?"}
+    Start --> A["encode_bencode(value)"]
+    A --> B{"BencodeValue type?"}
 
     B -- "Int(n)" --> C1["Call encode_integer(n)"]
     C1 --> D1["Return Vec<u8> of integer"]
@@ -22,6 +23,7 @@ flowchart TD
     B -- "Dict(d)" --> C4["Call encode_dict(d) (recursively encodes keys & values)"]
     C4 --> D4["Return Vec<u8> of dictionary with 'd'...'e'"]
 
+
 ```
 
 ## Decoder
@@ -30,7 +32,8 @@ Our current architecture is based on [recursive-descent parser](https://en.wikip
 
 ```mermaid
 flowchart TD
-    A["Start decode_bencode(data)"] --> B{"Is data empty?"}
+    Start --> A
+    A["decode_bencode(data)"] --> B{"Is data empty?"}
     B -- "Yes" --> C1["Return Err('Empty input')"]
     B -- "No" --> D["Check first byte"]
 
@@ -53,5 +56,8 @@ flowchart TD
 
     %% E1 -- "Other" --> C2["Return Err('Unknown type prefix')"]
 
-
 ```
+
+!!! info "Future"
+
+    The next generation of the parser might be based on `Zero copy, cursor based Parser`, i will look into it after i create other parts of the project
