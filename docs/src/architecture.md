@@ -4,7 +4,7 @@ icon: lucide/house
 
 ## Encoder
 
-Our current encoder is based on
+Our current encoder is based on [tagged-union](https://en.wikipedia.org/wiki/Tagged_union) type dispatch via pattern matching
 
 ```mermaid
 flowchart TD
@@ -35,7 +35,7 @@ flowchart TD
     B -- "No" --> D["Check first byte"]
 
     D --> E1{"First byte type?"}
-    E1 -- " Digit" --> F1["Call decode_string(data)"]
+    E1 -- "Digit" --> F1["Call decode_string(data)"]
     F1 --> G1["Wrap as BencodeValue::Str"]
     G1 --> H1["Return (Str, rest)"]
 
@@ -51,7 +51,7 @@ flowchart TD
     F4 --> G4["Wrap as BencodeValue::Dict"]
     G4 --> H4["Return (Dict, rest)"]
 
-    E1 -- "Other" --> C2["Return Err('Unknown type prefix')"]
+    %% E1 -- "Other" --> C2["Return Err('Unknown type prefix')"]
 
 
 ```
